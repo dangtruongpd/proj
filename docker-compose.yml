@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  mysqldb:
+    container_name: projdb
+    image: mysql:5.7
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: projdb
+    ports:
+      - 3307:3306
+    volumes:
+      - ./docker/db:/var/lib/mysql
+    networks:
+      proj_network:
+        ipv4_address: 172.21.0.2
+  app:
+    container_name: projapp
+    build:
+      dockerfile: ./docker/server/Dockerfile
+    ports:
+        - 80:80
+    depends_on:
+      - mysqldb
+    restart: unless-stopped
+    volumes:
+      - ./src:/var/www/html
+    stdin_open: true
+    tty: true
+    networks:
+      proj_network:
+        ipv4_address: 172.21.0.3
+  adminer:
+    container_name: projadminer
+    image: adminer:latest
+    environment:
+      ADMINER_DEFAULT_SERVER: mysqldb
+    ports:
+      - 8080:8080
+    networks:
+      proj_network:
+        ipv4_address: 172.21.0.4
+networks:
+  proj_network:
+    ipam:
+      config:
+        - subnet: 172.21.0.0/16
