@@ -36,7 +36,7 @@ class UserController extends ApiController
     {
         
         try {
-            $result= $this->userRepository->getAll();
+            $result= $this->userRepository->findPaginatedUser();
         } catch (\Exception $e) {
             return $this->failedResponse(500, $e->getMessage());
         }
