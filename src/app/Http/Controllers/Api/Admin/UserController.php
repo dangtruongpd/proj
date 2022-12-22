@@ -6,9 +6,12 @@ use App\Http\Controllers\Api\ApiController;
 use Illuminate\Http\Request;
 use App\Repositories\UserRepository;
 use App\Models\User;
+// use App\Traits\ApiResponse;
 
 class UserController extends ApiController
 {    
+
+    // use ApiResponse;
     /**
      * @var UserController
      */
@@ -31,19 +34,14 @@ class UserController extends ApiController
      */
     public function index()
     {
-        $result = ['status' => 200];
-
+        
         try {
-            $result['data'] = $this->userRepository->getAllUser();
+            $result= $this->userRepository->getAll();
         } catch (\Exception $e) {
-            $result = [
-                'status' => 500,
-                'error' => $e->getMessage(),
-            ];
+            return $this->failedResponse(500, $e->getMessage());
         }
 
-        return response()->json($result, $result['status']);
-        // return User::All();
+        return $this->succeedResponse(200, $result);
     }
 
     /**

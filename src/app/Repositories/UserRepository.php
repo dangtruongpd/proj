@@ -43,8 +43,4 @@ class UserRepository extends Repository
 
         return $users;
     }
-
-    public function getAllUser() {
-        // 
-    }
 }

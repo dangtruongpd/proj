@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Faker\Factory as Faker;
 use DB;
 use Hash;
+use Carbon\Carbon;
 use Laravolt\Avatar\Facade as Avatar;
 
 class UserSeeder extends Seeder
@@ -30,6 +31,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('Aa123456@'),
                 'avatar' => $faker->avatar($faker->randomNumber(), '300x300', 'jpg', 'set2', 'bg2'),
                 'level' => $faker->randomElement([0, 1, 2]),
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             ]);
         }
     }
