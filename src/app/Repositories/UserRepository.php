@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Repositories;
+use App\Models\User;
 
 class UserRepository extends Repository
 {  
@@ -41,5 +42,9 @@ class UserRepository extends Repository
         unset($users['links']);
 
         return $users;
+    }
+
+    public function getAllUser() {
+        // 
     }
 }
