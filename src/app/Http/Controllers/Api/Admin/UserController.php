@@ -5,9 +5,13 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Api\ApiController;
 use Illuminate\Http\Request;
 use App\Repositories\UserRepository;
+use App\Models\User;
+// use App\Traits\ApiResponse;
 
 class UserController extends ApiController
 {    
+
+    // use ApiResponse;
     /**
      * @var UserController
      */
@@ -30,7 +34,14 @@ class UserController extends ApiController
      */
     public function index()
     {
-        //
+        
+        try {
+            $result= $this->userRepository->getAll();
+        } catch (\Exception $e) {
+            return $this->failedResponse(500, $e->getMessage());
+        }
+
+        return $this->succeedResponse(200, $result);
     }
 
     /**
